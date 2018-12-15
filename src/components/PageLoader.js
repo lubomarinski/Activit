@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
 import WelcomePage from './pages/WelcomePage';
+import TrendingView from './views/TrendingView';
+import ViewLoader from './ViewLoader';
 
 export default class PageLoader extends Component {
   constructor(props) {
@@ -11,7 +12,9 @@ export default class PageLoader extends Component {
   }
 
   pageList = {
-    'WelcomePage': WelcomePage
+    'WelcomePage': WelcomePage,
+    'ViewLoader': ViewLoader,
+    'test': TrendingView
   }
 
   loadPage = (page) => {
