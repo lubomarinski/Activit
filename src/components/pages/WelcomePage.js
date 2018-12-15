@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, ImageBackground  } from 'react-native';
+import DiscoverView from '../views/DiscoverView';
 
 const styles = StyleSheet.create({
     container: {
@@ -23,8 +24,9 @@ const styles = StyleSheet.create({
 
 export default class WelcomePage extends Component {
     render() {
+        return <DiscoverView />;
         return (
-            <ImageBackground  source={require('../../img/burgas3.jpg')} style={styles.container}>
+            <ImageBackground source={require('../../img/burgas3.jpg')} style={styles.container}>
                 <Text style={styles.welcome}>Добре дошли в опознай бургас!</Text>
             </ImageBackground >
         );
