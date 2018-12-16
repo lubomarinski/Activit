@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, FlatList, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { getLocation } from '../../utils/geolocation';
 
 const styles = StyleSheet.create({
     page: {
@@ -27,18 +28,31 @@ export default class PlacesView extends Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
+            markers: []
+        }
+    }
+
+    async componentDidMount() {
+        const location = await getLocation();
+        this.setState({
+            region: {
+                latitude: location[0],
+                longitude: location[1],
+                latitudeDelta: 0.0522,
+                longitudeDelta: 0.0221,
+            }, 
             markers: [
                 {
                     location: {
-                        latitude: 37.78825,
-                        longitude: -122.4324
+                        latitude: location[0],
+                        longitude: location[1]
                     },
                     title: 'Заглавие',
                     description: 'Описание',
                     image: 'http://mining.free.bg/image.jpg',
                 }
             ]
-        }
+        });
     }
 
     onMapLayout = () => {
@@ -52,7 +66,7 @@ export default class PlacesView extends Component {
                     style={styles.map}
                     onLayout={this.onMapLayout}
                     region={this.state.region}
-                    onRegionChange={(region) => this.setState({ region })} >
+                    onRegionChangeComplete={(region) => this.setState({ region })} >
                     {this.state.isMapReady && this.state.markers.map(marker => (
                         <Marker
                             coordinate={marker.location}

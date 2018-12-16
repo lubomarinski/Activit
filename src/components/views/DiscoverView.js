@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, FlatList, CameraRoll, Alert, StyleSheet, ScrollView } from 'react-native';
 import Button from '../Button';
-import { getModelPics } from '../../api/images';
+import { getModelPics, addUserImage } from '../../api/images';
 import { getLocation, calculateDistance } from '../../utils/geolocation';
 import Pic from '../DiscoverPic';
 
@@ -79,8 +79,10 @@ export default class DiscoverView extends React.Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                const imageBlob = await (await fetch('data:image/jpeg;base64,' + response.data)).blob();
-
+                await addUserImage({ 
+                    image: response.uri, 
+                    location: this.state.location,
+                });
             }
         });
     };
