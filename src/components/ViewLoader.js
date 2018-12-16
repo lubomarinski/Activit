@@ -4,6 +4,7 @@ import DiscoverView from './views/DiscoverView';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 import { View, Image } from 'react-native';
 import PlacesView from './views/PlacesView';
+import RankView from './views/RankView';
 
 export default class ViewLoader extends Component {
     constructor(props) {
@@ -34,13 +35,21 @@ export default class ViewLoader extends Component {
             label: 'Места',
             barColor: '#E53935',
             pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+            key: 'RankView',
+            icon: require('../img/leaderboard_icon.png'),
+            label: 'Класация',
+            barColor: '#661895',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ]
 
     viewList = {
         'TrendingView': TrendingView,
         'DiscoverView': DiscoverView,
-        'MapView': PlacesView
+        'MapView': PlacesView,
+        'RankView': RankView
     }
 
     loadView = (view) => {

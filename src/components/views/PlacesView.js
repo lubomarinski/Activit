@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    map: {
+        width : Dimensions.get('window').width, //full width
+        height : Dimensions.get('window').height, //full height
+        flex: 1
     }
 });
 
@@ -15,6 +20,7 @@ export default class PlacesView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isMapReady: false,
             region: {
                 latitude: 37.78825,
                 longitude: -122.4324,
@@ -34,16 +40,22 @@ export default class PlacesView extends Component {
         }
     }
 
+    onMapLayout = () => {
+        this.setState({ isMapReady: true });
+    }
+
     render() {
         return (
             <View style={styles.page}>
                 <MapView
+                    style={styles.map}
+                    onLayout={this.onMapLayout}
                     region={this.state.region}
                     onRegionChange={(region) => this.setState({ region })} >
-                    {this.state.markers.map(marker => (
+                    {this.state.isMapReady && this.state.markers.map(marker => (
                         <Marker
                             coordinate={marker}
-                            image={require('../../img/pin.png')}
+                            image={require('../../img/pin3.png')}
                         />
                     ))}
                 </MapView>
