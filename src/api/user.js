@@ -67,3 +67,14 @@ export async function isTrustedUser() {
     const data = await res.json(); // { isTrusted: Boolean }
     return data.isTrusted === true;
 }
+
+export async function getUserPoints() {
+    //FIXME
+    return Promise.resolve(150);
+    const res = await fetch(`${BASE_URL}/api/user/points`, {
+        method: 'POST',
+        headers: createAuthHeaders(),
+    });
+    const data = await res.json(); // { isTrusted: Boolean }
+    return data.points;
+}

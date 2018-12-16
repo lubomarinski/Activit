@@ -5,6 +5,7 @@ import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigati
 import { View, Image } from 'react-native';
 import PlacesView from './views/PlacesView';
 import RankView from './views/RankView';
+import PointsOverlay from './PointsOverlay';
 
 export default class ViewLoader extends Component {
     constructor(props) {

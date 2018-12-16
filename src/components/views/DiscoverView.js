@@ -6,6 +6,7 @@ import { getLocation, calculateDistance } from '../../utils/geolocation';
 import Pic from '../DiscoverPic';
 
 import ImagePicker from 'react-native-image-picker';
+import PointsOverlay from '../PointsOverlay';
 
 const imagePickerOptions = {
     title: 'Избери снимка',
@@ -98,6 +99,7 @@ export default class DiscoverView extends React.Component {
         };
         return (
             <View style={styles.container}>
+                <PointsOverlay />
                 <Text style={styles.pageTitleText}>Открий Бургас!</Text>
                 <ScrollView contentContainerStyle={styles.itemContainer}>
                     <FlatList
