@@ -51,7 +51,7 @@ export default class SignupPage extends Component {
             <View style={styles.container}>
                 <View></View>
                 <View style={styles.contentCard}>
-                    <Text style={styles.welcome}>Вход в опознай бургас!</Text>
+                    <Text style={styles.welcome}>Ргистрирай се в опознай бургас!</Text>
                     <TextField
                         label='Email'
                         value={this.state.email}
