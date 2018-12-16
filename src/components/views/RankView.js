@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, FlatList, Dimensions } from 'react-native';
 import ImageCard from '../ImageCard';
+import UserCard from '../UserCard';
 
 const styles = StyleSheet.create({
     page: {
         backgroundColor: '#EEEEEE',
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    scroll: {
+        width: Dimensions.get('window').width
+    },
+    listContainer: {
+        alignItems: 'center'
     }
 });
 
@@ -15,82 +21,44 @@ export default class RankView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageList: [
+            userList: [
                 {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg',
-                    large: true
+                    fullName: 'cvfgbhngvfgh',
+                    points: 5
                 },
                 {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
+                    fullName: 'dfgfvgbf',
+                    points: 9
                 },
                 {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg',
-                    large: true
+                    fullName: 'fgfdefgbhg',
+                    points: 8
                 },
                 {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
+                    fullName: 'frtghgfgbhn',
+                    points: 2
                 },
                 {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
-                },
-                {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg',
-                    large: true
-                },
-                {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg',
-                    large: true
+                    fullName: 'dfgfgh',
+                    points: 58
                 }
             ]
         }
     }
 
-    getImageList = () => {
-        let imageList = [[], []];
-        let c = 0;
-        for (let i = 0; i < this.state.imageList.length; i++) {
-            imageList[c % 2].push(this.state.imageList[i]);
-            if (i !== 0) if (this.state.imageList[i - 1].large) c++;
-            c++;
-        }
-        return imageList;
-    }
-
     render() {
-        let imageList = this.getImageList();
         return (
             <View style={styles.page}>
-                <ScrollView >
-                    <View style={{ flex: 1, flexDirection: 'row', width: Dimensions.get('window').width }}>
+                <ScrollView style={styles.scroll} >
+                    <View style={styles.listContainer}>
                         <FlatList
-                            data={imageList[0]}
+                            data={this.state.userList}
                             //numColumns={2}
                             keyExtractor={(item, index) => index}
                             renderItem={(item) =>
-                                <ImageCard
-                                    img={item.item.image}
-                                    text={item.item.title}
-                                    large={item.item.large}
-                                    left
-                                //click={() => {this.props.loadPage()}}
-                                />}
-                        />
-                        <FlatList
-                            data={imageList[1]}
-                            //numColumns={2}
-                            keyExtractor={(item, index) => index}
-                            renderItem={(item) =>
-                                <ImageCard
-                                    img={item.item.image}
-                                    text={item.item.title}
-                                    large={item.item.large}
+                                <UserCard
+                                    fullName={item.item.fullName}
+                                    points={item.item.points}
                                 //click={() => {this.props.loadPage()}}
                                 />}
                         />
