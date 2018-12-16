@@ -9,7 +9,7 @@ export default class ViewLoader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentView: 'TrendingView'
+            currentView: 'DiscoverView'
         };
     }
 

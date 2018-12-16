@@ -1,10 +1,29 @@
 import React from 'react';
-import { View, Text, Image, Dimensions, FlatList, Alert, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, FlatList, CameraRoll, Alert, StyleSheet, ScrollView } from 'react-native';
 import Button from '../Button';
 import { getModelPics } from '../../api/images';
-import { getLocation } from '../../utils/geolocation';
+import { getLocation, calculateDistance } from '../../utils/geolocation';
+import Pic from '../DiscoverPic';
+
+import ImagePicker from 'react-native-image-picker';
+
+const imagePickerOptions = {
+    title: 'Избери снимка',
+    storageOptions: {
+        skipBackup: true,
+        path: 'images',
+    },
+};
 
 const styles = StyleSheet.create({
+    pageTitleText: {
+        flexWrap: 'wrap',
+        fontFamily: 'montserratalt_medium',
+        fontSize: 24,
+        color: '#000000CC',
+        textAlign: 'center',
+        padding: 8,
+    },
     container: {
         backgroundColor: '#EEE',
     },
@@ -14,7 +33,7 @@ const styles = StyleSheet.create({
     },
     cameraButton: {
         position: 'absolute',
-        bottom: 12,
+        bottom: 64,
         alignSelf: 'center',
     }
 });
@@ -23,31 +42,71 @@ export default class DiscoverView extends React.Component {
     state = {
         isLoading: true,
         items: [],
+        location: null,
     };
     async componentDidMount() {
+        const location = await getLocation();
+        this.setState({ location });
         this.setState({
             isLoading: false,
             items: [
-                { title: 'Коледната елха в центъра на Бургас', picUrl: 'none', likes: 123 },
-                { title: 'Коледният мост в центъра на Бургас', picUrl: 'none', likes: 73 }
+                {
+                    title: 'Коледната елха на Бургас',
+                    picUrl: 'none', likes: 123,
+                    location: [42.496256, 27.473455],
+                    description: 'Великолепната коледна елха е един от символите на зимния Бургас и е смятана за една от най-красивите градски елхи.'
+                },
+                {
+                    title: 'Коледният мост на Бургас',
+                    picUrl: 'none2',
+                    likes: 73,
+                    location: [42.495346, 27.484942],
+                    description: 'Великолепната коледна мост е един от символите на зимния Бургас и е смятана за една от най-красивите градски мост.'
+                }
             ]
         });
-        const location = await getLocation();
         const pics = await getModelPics({ location, maxdist: 500 /*meters*/, limit: 20, skip: 0 });
     }
+    onCameraClicked = () => {
+        ImagePicker.showImagePicker(imagePickerOptions, async (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const imageBlob = await (await fetch('data:image/jpeg;base64,' + response.data)).blob();
+
+            }
+        });
+    };
     render() {
         if (this.state.isLoading) {
             return <Text>Loading...</Text>;
         }
+        const renderPic = ({ item }) => {
+            const distance = calculateDistance(this.state.location, item.location);
+            return (
+                <Pic key={item.picUrl}
+                    distance={distance | 0}
+                    {...item}
+                />
+            );
+        };
         return (
             <View style={styles.container}>
+                <Text style={styles.pageTitleText}>Открий Бургас!</Text>
                 <ScrollView contentContainerStyle={styles.itemContainer}>
                     <FlatList
                         data={this.state.items}
-                        renderItem={({ item }) => <Pic key={item.picUrl} {...item} />}
+                        renderItem={renderPic}
                     />
+                    <View style={{ height: 72 }} />
                 </ScrollView >
-                <CameraButton style={styles.cameraButton} />
+                <CameraButton onPress={this.onCameraClicked} style={styles.cameraButton} />
             </View>
         );
     }
@@ -58,7 +117,8 @@ class CameraButton extends React.Component {
         super(props);
         this.styles = StyleSheet.create({
             button: {
-                overflow: 'hidden'
+                overflow: 'hidden',
+                zIndex: 100,
             },
             imageStyles: {
                 padding: 8,
@@ -70,78 +130,11 @@ class CameraButton extends React.Component {
     }
     render() {
         return (
-            <Button style={this.styles.button} {...this.props}>
+            <Button rippleColor="#00000088" rippleCircular={true} style={this.styles.button} {...this.props}>
                 <View style={this.styles.imageStyles}>
                     <Image source={require('../../img/camera.png')} />
                 </View>
             </Button>
-        );
-    }
-}
-
-class Pic extends React.Component {
-    constructor(props) {
-        super(props);
-        this.dims = Dimensions.get('window');
-        this.styles = StyleSheet.create({
-            container: {
-                elevation: 3,
-                borderRadius: 16,
-                height: this.dims.width + 80,
-                marginBottom: 24,
-                overflow: 'hidden',
-                width: this.dims.width - 24,
-            },
-            image: {
-                width: this.dims.width - 24,
-                height: this.dims.width,
-            },
-            titleText: {
-                overflow: 'hidden',
-                fontWeight: '400',
-                fontSize: 18,
-                color: '#000000CC',
-                textAlign: 'center',
-                padding: 8,
-            },
-            likesText: {
-                fontWeight: '400',
-                fontSize: 16,
-                color: '#000000BB',
-                textAlign: 'center',
-            },
-            likesButton: {
-                padding: 4,
-                borderLeftWidth: 1,
-                borderLeftColor: 'lightgray',
-            },
-            likesFiller: {
-                flex: 1,
-            },
-        });
-    }
-    render() {
-        const { title, picUrl, likes } = this.props;
-        const likesWidth = 72;
-        const titleWidth = this.dims.width - 24;
-        return (
-            <View style={this.styles.container}>
-                <View style={this.styles.image}>
-                    <Image style={this.styles.image}
-                        width={this.dims.width}
-                        height={this.dims.width}
-                        resizeMethod="scale"
-                        source={require('../../img/placeholder1.jpg')} />
-                </View>
-                <View style={{ height: 48, flexDirection: 'column' }}>
-                    <View style={{ width: titleWidth }}>
-                        <Text style={this.styles.titleText}>{title}</Text>
-                    </View>
-                    <View style={{ width: likesWidth }}>
-                        <Button style={this.styles.likesButton}><Text style={this.styles.likesText}>❤ {likes}</Text></Button>
-                    </View>
-                </View>
-            </View>
         );
     }
 }

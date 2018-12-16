@@ -6,8 +6,11 @@ export default class Button extends React.Component {
         super(props);
     }
     render() {
+        const { rippleColor, rippleCircular, onPress, ...rest } = this.props;
         return (
-            <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple()}>
+            <TouchableNativeFeedback 
+                onPress={onPress}
+                background={TouchableNativeFeedback.Ripple(rippleColor || void 0, rippleCircular === true)}>
                 <View {...this.props} />
             </TouchableNativeFeedback>
         )
