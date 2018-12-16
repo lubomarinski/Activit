@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     map: {
-        width : Dimensions.get('window').width, //full width
-        height : Dimensions.get('window').height, //full height
+        width: Dimensions.get('window').width, //full width
+        height: Dimensions.get('window').height, //full height
         flex: 1
     }
 });
@@ -29,12 +29,13 @@ export default class PlacesView extends Component {
             },
             markers: [
                 {
-                    latitude: 37.78825,
-                    longitude: -122.4324
-                },
-                {
-                    latitude: 37.08825,
-                    longitude: -122.0324
+                    location: {
+                        latitude: 37.78825,
+                        longitude: -122.4324
+                    },
+                    title: 'Заглавие',
+                    description: 'Описание',
+                    image: 'http://mining.free.bg/image.jpg',
                 }
             ]
         }
@@ -54,8 +55,10 @@ export default class PlacesView extends Component {
                     onRegionChange={(region) => this.setState({ region })} >
                     {this.state.isMapReady && this.state.markers.map(marker => (
                         <Marker
-                            coordinate={marker}
+                            coordinate={marker.location}
                             image={require('../../img/pin3.png')}
+                            title={marker.title}
+                            description={marker.description}
                         />
                     ))}
                 </MapView>

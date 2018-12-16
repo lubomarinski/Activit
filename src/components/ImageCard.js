@@ -26,11 +26,12 @@ export default class ImageCard extends Component {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#FAFAFA',
+                backgroundColor: 'white',
                 width: imgSize.width,
                 margin: Dimensions.get('window').width * 0.025,
                 borderRadius: 15,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                elevation: 3,
             },
             imageImg: {
                 width: imgSize.width,

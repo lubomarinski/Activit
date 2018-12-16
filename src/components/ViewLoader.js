@@ -6,6 +6,7 @@ import { View, Image } from 'react-native';
 import PlacesView from './views/PlacesView';
 import RankView from './views/RankView';
 import PointsOverlay from './PointsOverlay';
+import TransactionView from './views/TransactionView';
 
 export default class ViewLoader extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ export default class ViewLoader extends Component {
             key: 'DiscoverView',
             icon: require('../img/find_icon.png'),
             label: 'Открий',
-            barColor: '#2196f3',
+            barColor: '#2196F3',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -43,6 +44,13 @@ export default class ViewLoader extends Component {
             label: 'Класация',
             barColor: '#661895',
             pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+            key: 'TransactionView',
+            icon: require('../img/arrows_icon.png'),
+            label: 'Плащане',
+            barColor: '#FB8C00',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ]
 
@@ -50,7 +58,8 @@ export default class ViewLoader extends Component {
         'TrendingView': TrendingView,
         'DiscoverView': DiscoverView,
         'MapView': PlacesView,
-        'RankView': RankView
+        'RankView': RankView,
+        'TransactionView': TransactionView
     }
 
     loadView = (view) => {

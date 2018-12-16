@@ -13,12 +13,27 @@ export default class UserCard extends Component {
                 width: Dimensions.get('window').width * 0.8,
                 height: 50,
                 borderRadius: 50,
-                backgroundColor: '#FAFAFA',
-                margin: 10
+                backgroundColor: 'white',
+                margin: 10,
+                elevation: 3,
+            },
+            textCoin: {
+                fontSize: 20
+            },
+            pointsView: {
+                flexDirection: 'row',
+                justifyContent: 'center',
+                padding: 20
+            },
+            coin: {
+                width: 28,
+                height: 28
             },
             text: {
-                padding: 20,
-                fontSize: 20
+                fontSize: 20,
+                paddingLeft: 5,
+                paddingRight: 5,
+                fontWeight: 'bold'
             }
         });
     };
@@ -26,8 +41,14 @@ export default class UserCard extends Component {
     render() {
         return (
             <View onPress={this.props.onPress} style={this.styles.container}>
-                <Text style={this.styles.text}>{this.props.fullName}</Text>
-                <Text style={this.styles.text}>{this.props.points}</Text>
+                <View style={this.styles.pointsView} >
+                    <Text style={this.styles.text}>{this.props.place}</Text>
+                    <Text style={this.styles.textCoin}>{this.props.fullName}</Text>
+                </View>
+                <View style={this.styles.pointsView} >
+                    <Image style={this.styles.coin} source={require('../img/points.png')} />
+                    <Text style={this.styles.textCoin}>{this.props.points}</Text>
+                </View>
             </View>
         );
     }

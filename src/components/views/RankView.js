@@ -24,23 +24,28 @@ export default class RankView extends Component {
             userList: [
                 {
                     fullName: 'cvfgbhngvfgh',
-                    points: 5
+                    points: 59,
+                    place: 1
                 },
                 {
                     fullName: 'dfgfvgbf',
-                    points: 9
+                    points: 58,
+                    place: 2
                 },
                 {
                     fullName: 'fgfdefgbhg',
-                    points: 8
+                    points: 25,
+                    place: 3
                 },
                 {
                     fullName: 'frtghgfgbhn',
-                    points: 2
+                    points: 4,
+                    place: 4
                 },
                 {
                     fullName: 'dfgfgh',
-                    points: 58
+                    points: 1,
+                    place: 5
                 }
             ]
         }
@@ -59,6 +64,7 @@ export default class RankView extends Component {
                                 <UserCard
                                     fullName={item.item.fullName}
                                     points={item.item.points}
+                                    place={item.item.place}
                                 //click={() => {this.props.loadPage()}}
                                 />}
                         />
