@@ -16,7 +16,11 @@ export default class ImageCard extends Component {
                 fontWeight: '300',
                 fontSize: 20,
                 textAlign: 'center',
-                fontFamily: 'Roboto'
+                fontFamily: 'Roboto',
+                flexWrap: 'wrap',
+                fontFamily: 'montserratalt_medium',
+                paddingTop: 4,
+                paddingBottom: 5
             },
             imagePanel: {
                 flex: 1,
@@ -24,7 +28,9 @@ export default class ImageCard extends Component {
                 alignItems: 'center',
                 backgroundColor: '#FAFAFA',
                 width: imgSize.width,
-                margin: Dimensions.get('window').width * 0.025
+                margin: Dimensions.get('window').width * 0.025,
+                borderRadius: 15,
+                overflow: 'hidden'
             },
             imageImg: {
                 width: imgSize.width,
