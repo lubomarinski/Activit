@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
 import TrendingView from './views/TrendingView';
+import DiscoverView from './views/DiscoverView';
 import BottomNavigation, { FullTab } from 'react-native-material-bottom-navigation';
 import { View, Image } from 'react-native';
+import PlacesView from './views/PlacesView';
 
 export default class ViewLoader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentView: 'trendingView'
+            currentView: 'TrendingView'
         };
     }
 
     tabs = [
         {
-            key: 'trendingView',
+            key: 'TrendingView',
             icon: require('../img/home_icon.png'),
             label: 'Начало',
             barColor: '#388E3C',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+            key: 'DiscoverView',
+            icon: require('../img/find_icon.png'),
+            label: 'Открий',
+            barColor: '#2196f3',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+            key: 'MapView',
+            icon: require('../img/find_icon.png'),
+            label: 'Места',
+            barColor: '#E53935',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ]
 
     viewList = {
-        'trendingView': TrendingView
+        'TrendingView': TrendingView,
+        'DiscoverView': DiscoverView,
+        'MapView': PlacesView
     }
 
     loadView = (view) => {
