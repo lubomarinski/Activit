@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, ImageBackground, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, ImageBackground, Alert, View, Dimensions } from 'react-native';
 import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
 import { TextField } from 'react-native-material-textfield';
+import { loginUser, isTrustedUser } from '../../api/user';
 
 const styles = StyleSheet.create({
     container: {
@@ -45,13 +46,28 @@ export default class LoginPage extends Component {
             password: ''
         };
     }
+    onLoginClicked = async () => {
+        const { email, password } = this.state;
+        //this.props.loadPage('ViewLoader');
+        //return;
+        try {
+            const data = await loginUser({ email, password });
+            if (!data.error) {
+                this.props.loadPage('ViewLoader');
+            } else {
+                Alert.alert("Error", data.error);
+            }
+        } catch (e) {
+            Alert.alert("Error", e.toString() + e.stack.toString());
+        }
+    };
     render() {
         return (
             //<ImageBackground source={require('../../img/burgas3.jpg')} style={styles.container}>
             <View style={styles.container}>
                 <View></View>
                 <View style={styles.contentCard}>
-                    <Text style={styles.welcome}>Вход в опознай бургас!</Text>
+                    <Text style={styles.welcome}>Вход в опознай Бургас!</Text>
                     <TextField
                         label='Email'
                         value={this.state.email}
@@ -59,7 +75,7 @@ export default class LoginPage extends Component {
                         onChangeText={(email) => this.setState({ email })}
                     />
                     <TextField
-                        label='Password'
+                        label='Парола'
                         value={this.state.password}
                         fontSize={20}
                         secureTextEntry
@@ -67,7 +83,7 @@ export default class LoginPage extends Component {
                     />
                     <View style={styles.buttonsContainer}>
                         <RaisedTextButton
-                            onPress={() => this.props.loadPage('ViewLoader')}
+                            onPress={this.onLoginClicked}
                             style={styles.button}
                             title="Вход"
                             color="#2196f3"
