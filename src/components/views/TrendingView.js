@@ -18,7 +18,17 @@ export default class TrendingView extends Component {
             imageList: [
                 {
                     title: 'cvfgbhngvfgh',
+                    image: 'http://mining.free.bg/image.jpg',
+                    large: true
+                },
+                {
+                    title: 'cvfgbhngvfgh',
                     image: 'http://mining.free.bg/image.jpg'
+                },
+                {
+                    title: 'cvfgbhngvfgh',
+                    image: 'http://mining.free.bg/image.jpg',
+                    large: true
                 },
                 {
                     title: 'cvfgbhngvfgh',
@@ -30,19 +40,13 @@ export default class TrendingView extends Component {
                 },
                 {
                     title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
+                    image: 'http://mining.free.bg/image.jpg',
+                    large: true
                 },
                 {
                     title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
-                },
-                {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
-                },
-                {
-                    title: 'cvfgbhngvfgh',
-                    image: 'http://mining.free.bg/image.jpg'
+                    image: 'http://mining.free.bg/image.jpg',
+                    large: true
                 }
             ]
         }
@@ -50,8 +54,11 @@ export default class TrendingView extends Component {
 
     getImageList = () => {
         let imageList = [[], []];
+        let c = 0;
         for (let i = 0; i < this.state.imageList.length; i++) {
-            imageList[i % 2].push(this.state.imageList[i]);
+            imageList[c % 2].push(this.state.imageList[i]);
+            if (i !== 0) if (this.state.imageList[i - 1].large) c++;
+            c++;
         }
         return imageList;
     }
@@ -61,7 +68,7 @@ export default class TrendingView extends Component {
         return (
             <View style={styles.page}>
                 <ScrollView >
-                    <View style={{flex: 1, flexDirection: 'row', width: Dimensions.get('window').width }}>
+                    <View style={{ flex: 1, flexDirection: 'row', width: Dimensions.get('window').width }}>
                         <FlatList
                             data={imageList[0]}
                             //numColumns={2}
@@ -70,6 +77,7 @@ export default class TrendingView extends Component {
                                 <ImageCard
                                     img={item.item.image}
                                     text={item.item.title}
+                                    large={item.item.large}
                                     left
                                 //click={() => {this.props.loadPage()}}
                                 />}
@@ -82,6 +90,7 @@ export default class TrendingView extends Component {
                                 <ImageCard
                                     img={item.item.image}
                                     text={item.item.title}
+                                    large={item.item.large}
                                 //click={() => {this.props.loadPage()}}
                                 />}
                         />

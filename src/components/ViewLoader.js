@@ -30,7 +30,7 @@ export default class ViewLoader extends Component {
         },
         {
             key: 'MapView',
-            icon: require('../img/find_icon.png'),
+            icon: require('../img/map_icon.png'),
             label: 'Места',
             barColor: '#E53935',
             pressColor: 'rgba(255, 255, 255, 0.16)'

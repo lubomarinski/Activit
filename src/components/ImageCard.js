@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'rea
 export default class ImageCard extends Component {
     constructor(props) {
         super(props);
-        imgSize = props.imgSize;
+        let imgSize = props.imgSize;
         if (imgSize === undefined) imgSize = {
             width: Dimensions.get('window').width * 0.45,
             height: Dimensions.get('window').width * 0.45
         }
+        if (props.large) imgSize.height = imgSize.height * 2;
         this.styles = StyleSheet.create({
             imageText: {
                 color: '#212121',
